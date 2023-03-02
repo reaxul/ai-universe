@@ -1,4 +1,5 @@
 const loadData = () => {
+    document.getElementById('spinner').classList.remove('d-none');
     fetch('https://openapi.programming-hero.com/api/ai/tools')
         .then(res => res.json())
         .then(data => showData(data.data.tools.slice(0, 6)))
@@ -6,6 +7,7 @@ const loadData = () => {
 const showData = data => {
     const container = document.getElementById('data-container');
     container.innerHTML = ''
+    document.getElementById('spinner').classList.add('d-none');
     data.forEach(card => {
         const { image, name, features, published_in } = card;
         const div = document.createElement('div');
