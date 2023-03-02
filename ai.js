@@ -1,12 +1,13 @@
 const loadData = () => {
     fetch('https://openapi.programming-hero.com/api/ai/tools')
         .then(res => res.json())
-        .then(data => showData(data.data.tools))
+        .then(data => showData(data.data.tools.slice(0, 6)))
 }
 const showData = data => {
     const container = document.getElementById('data-container');
+    container.innerHTML=''
     data.forEach(card => {
-        const {image,name,features,published_in}=card;
+        const { image, name, features, published_in } = card;
         const div = document.createElement('div');
         div.classList.add('col')
 
@@ -19,7 +20,7 @@ const showData = data => {
                     <ol id="list-item class="text-nowrap">
                         <li class="text-nowrap">${features[0]}</li>
                         <li class="text-nowrap">${features[1]}</li>
-                        <li class="text-nowrap">${features[2]?features[2]:"Number 3 not available"}</li>
+                        <li class="text-nowrap">${features[2] ? features[2] : "Number 3 not available"}</li>
                     </ol>
                     <hr>
                 <div class="d-flex justify-content-between align-items-center">
@@ -43,9 +44,13 @@ const showData = data => {
         //     console.log(li);
         //     listItem.appendChild("li");
         // });
-        
+
         container.appendChild(div);
     });
 
 }
-loadData();
+const loadAllData = () => {
+    fetch('https://openapi.programming-hero.com/api/ai/tools')
+        .then(res => res.json())
+        .then(data => showData(data.data.tools))
+}
