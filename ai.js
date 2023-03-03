@@ -19,11 +19,11 @@ const showData = data => {
                 <img src="${image}" class="card-img-top h-50" alt="...">
                 <div class="card-body">
                 <h5>Features</h5>
-                    <ol id="list-item class="text-nowrap">
+                    <ul id="feature-list" class="text-nowrap">
                         <li class="text-nowrap">${features[0]}</li>
                         <li class="text-nowrap">${features[1]}</li>
-                        <li class="text-nowrap">${features[2] ? features[2] : "Number 3 not available"}</li>
-                    </ol>
+                        <li class="text-nowrap">${features[2] ? features[2] : "No feature found"}</li>
+                    </ul>
                     <hr>
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -39,17 +39,10 @@ const showData = data => {
             </div>
         
         `
-        // const listItem = document.getElementById('list-item')
-        // features.forEach(feature => {
-        //     const li=document.createElement('li')
-        //     li.innerHTML=`${feature}`
-        //     console.log(li);
-        //     listItem.appendChild("li");
-        // });
-
         container.appendChild(div);
 
     });
+
 
 }
 
@@ -73,12 +66,14 @@ const getModalData = id => {
 // to show modal
 const showModalData = modal => {
     const modalContainer = document.getElementById('modal');
-    modalContainer.innerHTML='';
-    const modalData=document.createElement('div');
+    modalContainer.innerHTML = '';
+    const modalData = document.createElement('div');
     modalData.classList.add('modal-content');
-    modalData.innerHTML=`
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
+    modalData.innerHTML = `
+    
+    <div class="modal-header">
+          <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
     <div class="row row-cols-1 row-cols-md-2 g-4 p-5">
         <div class="col hover-bg">
             <div class="card h-100 p-3">
@@ -88,17 +83,17 @@ const showModalData = modal => {
                 <div class="d-flex align-items-center bg-light py-3 rounded small-text">
                     <div class="pe-4 text-success text-center">
                         <b>
-                             ${modal.pricing?modal.pricing[0].price + " " + modal.pricing[0].plan:"Free of cost"}
+                             ${modal.pricing ? modal.pricing[0].price + " " + modal.pricing[0].plan : "Free of cost"}
                         </b>
                     </div>
                     <div class="pe-4 text-warning text-center">
                         <b>
-                        ${modal.pricing?modal.pricing[1].price + " " + modal.pricing[1].plan:"Free of cost"}
+                        ${modal.pricing ? modal.pricing[1].price + " " + modal.pricing[1].plan : "Free of cost"}
                         </b>
                     </div>
                     <div class="pe-4 text-danger text-center">
                         <b>
-                        ${modal.pricing?modal.pricing[2].price + " " + modal.pricing[2].plan:"Free of cost"}
+                        ${modal.pricing ? modal.pricing[2].price + " " + modal.pricing[2].plan : "Free of cost"}
                         </b>
                     </div>
                 </div>
@@ -118,9 +113,9 @@ const showModalData = modal => {
                             Integrations
                         </h5>
                         <ul class="small-text">
-                          <li>${modal.integrations?modal.integrations[0]:"No data found"}</li>
-                          <li>${modal.integrations?modal.integrations[1]:"No data found"}</li>
-                          <li>${modal.integrations?modal.integrations[2]:"No data found"}</li>
+                          <li>${modal.integrations ? modal.integrations[0] : "No data"}</li>
+                          <li>${modal.integrations ? modal.integrations[1] : "No data"}</li>
+                          <li>${modal.integrations ? modal.integrations[2] : "No data"}</li>
                         </ul>
                     </div>
                 </div>
@@ -130,13 +125,13 @@ const showModalData = modal => {
             <div class="container h-100 p-2">
                 <img src=${modal.image_link[0]} class="img-fluid rounded" alt="...">
                 <div class="d-flex align-items-center justify-content-center text-center p-5 flex-column">
-                    <h5 class="card-title pb-2">${modal.input_output_examples[0].input}</h5>
-                    <p class="small-text">${modal.input_output_examples[0].output}</p>
+                    <h5 class="card-title pb-2">${modal.input_output_examples ? modal.input_output_examples[0].input : "Can you give any example?"}</h5>
+                    <p class="small-text">${modal.input_output_examples ? modal.input_output_examples[0].output : "No! Not Yet! Take a break!!!"}</p>
                 </div>
             </div>
         </div>
     </div>
     `
-    console.log(modal.features);
+    
     modalContainer.appendChild(modalData);
 }
