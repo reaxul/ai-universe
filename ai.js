@@ -9,7 +9,7 @@ const showData = data => {
     container.innerHTML = ''
     document.getElementById('spinner').classList.add('d-none');
     data.forEach(card => {
-        const { image, name, features, published_in } = card;
+        const { image, name, features, published_in, id } = card;
         const div = document.createElement('div');
         div.classList.add('col')
 
@@ -32,7 +32,7 @@ const showData = data => {
                         <small>${published_in}</small>
                     </div>
                     <div>
-                    <i class="fa-sharp fa-solid fa-circle-arrow-right fa-lg"></i>
+                    <i onclick="getModalData('${id}')" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="fa-sharp fa-solid fa-circle-arrow-right fa-lg text-danger"></i>
                     </div>
                 </div>
                 </div>
@@ -48,6 +48,7 @@ const showData = data => {
         // });
 
         container.appendChild(div);
+
     });
 
 }
@@ -57,4 +58,18 @@ const loadAllData = () => {
         .then(data => showData(data.data.tools));
     const moreButton = document.getElementById('show-more');
     moreButton.classList.add('d-none')
+}
+const getModalData = id => {
+    const URL = `https://openapi.programming-hero.com/api/ai/tool/${id}`
+    fetch(URL)
+        .then(res => res.json())
+        .then(data => console.log(data.data));
+
+}
+const showModalData = modal => {
+    console.log(modal);
+    const modal = document.getElementById('modal')
+    modal.innerHTML = `
+
+`
 }
