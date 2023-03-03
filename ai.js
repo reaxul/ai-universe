@@ -122,8 +122,10 @@ const showModalData = modal => {
             </div>
         </div>
         <div class="col hover-bg position-relative">
-            <div class="bg-danger text-end position-absolute top-0 end-0 p-1 rounded">
-              ${modal.accuracy.score? modal.accuracy.score * 100 +"% accuracy":""}
+            <div id="accuracy" class="bg-danger text-end position-absolute top-0 end-0 p-1 rounded">
+              ${modal.accuracy.score? modal.accuracy.score * 100 +"% accuracy": ''
+
+            }
             </div>
             <div class="container h-100 p-2">
                 <img src=${modal.image_link[0]} class="img-fluid rounded" alt="...">
@@ -135,6 +137,26 @@ const showModalData = modal => {
         </div>
     </div>
     `
-    console.log(modal.accuracy.score);
+    
     modalContainer.appendChild(modalData);
 }
+
+// sorting data 
+const loadSortedData=()=>{
+    document.getElementById('show-more').classList.add('d-none')
+    fetch('https://openapi.programming-hero.com/api/ai/tools')
+.then(res=>res.json())
+.then(data=>displaySortedData(data.data.tools))
+}
+const displaySortedData=data=>{
+const Ai=data;
+sort = (a, b) => {
+    const dateA = new Date(a.published_in);
+    const dateB = new Date(b.published_in);
+    if (dateA > dateB) return 1;
+    else if (dateA < dateB) return -1;
+    return 0;
+  };
+  showData(Ai.sort(sort));
+}
+
