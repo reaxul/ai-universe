@@ -77,6 +77,8 @@ const showModalData = modal => {
     const modalData=document.createElement('div');
     modalData.classList.add('modal-content');
     modalData.innerHTML=`
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
     <div class="row row-cols-1 row-cols-md-2 g-4 p-5">
         <div class="col hover-bg">
             <div class="card h-100 p-3">
@@ -125,15 +127,16 @@ const showModalData = modal => {
             </div>
         </div>
         <div class="col hover-bg">
-            <div class="card h-100">
-                <img src=${modal.image_link[0]} class="card-img-top" alt="...">
-                <div class="card-body text-center">
-                    <h5 class="card-title">${modal.input_output_examples[0].input}</h5>
+            <div class="container h-100 p-2">
+                <img src=${modal.image_link[0]} class="img-fluid rounded" alt="...">
+                <div class="d-flex align-items-center justify-content-center text-center p-5 flex-column">
+                    <h5 class="card-title pb-2">${modal.input_output_examples[0].input}</h5>
                     <p class="small-text">${modal.input_output_examples[0].output}</p>
                 </div>
             </div>
         </div>
     </div>
     `
+    console.log(modal.features);
     modalContainer.appendChild(modalData);
 }
