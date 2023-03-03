@@ -122,11 +122,13 @@ const showModalData = modal => {
             </div>
         </div>
         <div class="col hover-bg position-relative">
-            <div id="accuracy" class="bg-danger text-end position-absolute top-0 end-0 p-1 rounded">
-              ${modal.accuracy.score? modal.accuracy.score * 100 +"% accuracy": ''
+        ${modal.accuracy.score? `
+        <div class="bg-danger text-end position-absolute top-0 end-0 p-1 rounded">
+        ${modal.accuracy.score * 100 +"% accuracy"} </div>
+        `
+         : ""
 
-            }
-            </div>
+    }
             <div class="container h-100 p-2">
                 <img src=${modal.image_link[0]} class="img-fluid rounded" alt="...">
                 <div class="d-flex align-items-center justify-content-center text-center p-5 flex-column">
@@ -160,3 +162,8 @@ sort = (a, b) => {
   showData(Ai.sort(sort));
 }
 
+{/* <div class="bg-danger text-end position-absolute top-0 end-0 p-1 rounded">
+              ${modal.accuracy.score? modal.accuracy.score * 100 +"% accuracy": ''
+
+            }
+            </div> */}
