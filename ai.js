@@ -71,8 +71,8 @@ const showModalData = modal => {
     modalData.classList.add('modal-content');
     modalData.innerHTML = `
     
-    <div class="modal-header">
-          <button type="button" class="btn-close bg-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-header position-relative">
+          <button type="button" class="btn-close bg-danger rounded-circle position-absolute top-0 start-100 translate-middle" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="row row-cols-1 row-cols-md-2 g-4 p-5">
         <div class="col hover-bg">
@@ -121,7 +121,10 @@ const showModalData = modal => {
                 </div>
             </div>
         </div>
-        <div class="col hover-bg">
+        <div class="col hover-bg position-relative">
+            <div class="bg-danger text-end position-absolute top-0 end-0 p-1 rounded">
+              ${modal.accuracy.score? modal.accuracy.score * 100 +"% accuracy":""}
+            </div>
             <div class="container h-100 p-2">
                 <img src=${modal.image_link[0]} class="img-fluid rounded" alt="...">
                 <div class="d-flex align-items-center justify-content-center text-center p-5 flex-column">
@@ -132,6 +135,6 @@ const showModalData = modal => {
         </div>
     </div>
     `
-    
+    console.log(modal.accuracy.score);
     modalContainer.appendChild(modalData);
 }
