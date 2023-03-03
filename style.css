@@ -1,1 +1,7 @@
 
+.hover-bg :hover{
+    background-color: antiquewhite;
+}
+.small-text{
+    font-size: small;
+}

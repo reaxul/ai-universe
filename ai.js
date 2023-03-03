@@ -52,6 +52,8 @@ const showData = data => {
     });
 
 }
+
+// show more button to load all data
 const loadAllData = () => {
     fetch('https://openapi.programming-hero.com/api/ai/tools')
         .then(res => res.json())
@@ -59,17 +61,79 @@ const loadAllData = () => {
     const moreButton = document.getElementById('show-more');
     moreButton.classList.add('d-none')
 }
+
+// to load modal
 const getModalData = id => {
     const URL = `https://openapi.programming-hero.com/api/ai/tool/${id}`
     fetch(URL)
         .then(res => res.json())
-        .then(data => console.log(data.data));
+        .then(data => showModalData(data.data));
 
 }
+// to show modal
 const showModalData = modal => {
-    console.log(modal);
-    const modal = document.getElementById('modal')
-    modal.innerHTML = `
-
-`
+    const modalContainer = document.getElementById('modal');
+    modalContainer.innerHTML='';
+    const modalData=document.createElement('div');
+    modalData.classList.add('modal-content');
+    modalData.innerHTML=`
+    <div class="row row-cols-1 row-cols-md-2 g-4 p-5">
+        <div class="col hover-bg">
+            <div class="card h-100 p-3">
+                <div>
+                    <h5>${modal.description}</h5> 
+                </div>
+                <div class="d-flex align-items-center bg-light py-3 rounded small-text">
+                    <div class="pe-4 text-success text-center">
+                        <b>
+                             ${modal.pricing?modal.pricing[0].price + " " + modal.pricing[0].plan:"Free of cost"}
+                        </b>
+                    </div>
+                    <div class="pe-4 text-warning text-center">
+                        <b>
+                        ${modal.pricing?modal.pricing[1].price + " " + modal.pricing[1].plan:"Free of cost"}
+                        </b>
+                    </div>
+                    <div class="pe-4 text-danger text-center">
+                        <b>
+                        ${modal.pricing?modal.pricing[2].price + " " + modal.pricing[2].plan:"Free of cost"}
+                        </b>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-7">
+                        <h5>
+                            Features
+                        </h5>
+                            <ul class="small-text">
+                             <li>${modal.features[1].feature_name}</li>
+                             <li>${modal.features[2].feature_name}</li>
+                             <li>${modal.features[3].feature_name}</li>
+                            </ul>
+                    </div>
+                    <div class="col-5">
+                        <h5>
+                            Integrations
+                        </h5>
+                        <ul class="small-text">
+                          <li>${modal.integrations?modal.integrations[0]:"No data found"}</li>
+                          <li>${modal.integrations?modal.integrations[1]:"No data found"}</li>
+                          <li>${modal.integrations?modal.integrations[2]:"No data found"}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col hover-bg">
+            <div class="card h-100">
+                <img src=${modal.image_link[0]} class="card-img-top" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title">${modal.input_output_examples[0].input}</h5>
+                    <p class="small-text">${modal.input_output_examples[0].output}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    `
+    modalContainer.appendChild(modalData);
 }
