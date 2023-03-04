@@ -19,11 +19,12 @@ const showData = data => {
                 <img src="${image}" class="card-img-top h-50" alt="...">
                 <div class="card-body">
                 <h5>Features</h5>
-                    <ul id="feature-list" class="text-nowrap">
+                    <ol id="feature-list" class="text-nowrap">
                         <li class="text-nowrap">${features[0]}</li>
                         <li class="text-nowrap">${features[1]}</li>
-                        <li class="text-nowrap">${features[2] ? features[2] : "No feature found"}</li>
-                    </ul>
+                        <li class=${features[2]?"" : "d-none text-nowrap"}>${features[2]}</li>
+                        <li class=${features[3]?"" : "d-none text-nowrap"}>${features[3]}</li>
+                    </ol>
                     <hr>
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -112,23 +113,30 @@ const showModalData = modal => {
                         <h5>
                             Integrations
                         </h5>
-                        <ul class="small-text">
-                          <li>${modal.integrations ? modal.integrations[0] : "No data"}</li>
-                          <li>${modal.integrations ? modal.integrations[1] : "No data"}</li>
-                          <li>${modal.integrations ? modal.integrations[2] : "No data"}</li>
-                        </ul>
+                        ${
+                          modal.integrations?
+                          `<ul class="small-text">
+                          <li class=${modal.integrations[0]=== undefined ? "d-none" : ""}>${modal.integrations[0]}</li>
+                          <li class=${modal.integrations[1]=== undefined ? "d-none" : ""}>${modal.integrations[1]}</li>
+                          <li class=${modal.integrations[2]=== undefined ? "d-none" : ""}>${modal.integrations[2]}</li>
+                          <li class=${modal.integrations[3]=== undefined ? "d-none" : ""}>${modal.integrations[3]}</li>
+                          
+                        </ul>`
+                        : `<small>No data found</small>`
+                        }
                     </div>
                 </div>
             </div>
         </div>
         <div class="col hover-bg position-relative">
-        ${modal.accuracy.score? `
-        <div class="bg-danger text-end position-absolute top-0 end-0 p-1 rounded">
-        ${modal.accuracy.score * 100 +"% accuracy"} </div>
-        `
-         : ""
+        ${modal.accuracy.score ?
+            `
+            <div class="bg-danger text-end position-absolute top-0 end-0 p-1 rounded">
+            ${modal.accuracy.score * 100 + "% accuracy"} </div>
+            `
+            : ""
 
-    }
+        }
             <div class="container h-100 p-2">
                 <img src=${modal.image_link[0]} class="img-fluid rounded" alt="...">
                 <div class="d-flex align-items-center justify-content-center text-center p-5 flex-column">
@@ -139,31 +147,26 @@ const showModalData = modal => {
         </div>
     </div>
     `
-    
+
     modalContainer.appendChild(modalData);
 }
 
 // sorting data 
-const loadSortedData=()=>{
+const loadSortedData = () => {
     document.getElementById('show-more').classList.add('d-none')
     fetch('https://openapi.programming-hero.com/api/ai/tools')
-.then(res=>res.json())
-.then(data=>displaySortedData(data.data.tools))
+        .then(res => res.json())
+        .then(data => displaySortedData(data.data.tools))
 }
-const displaySortedData=data=>{
-const Ai=data;
-sort = (a, b) => {
-    const dateA = new Date(a.published_in);
-    const dateB = new Date(b.published_in);
-    if (dateA > dateB) return 1;
-    else if (dateA < dateB) return -1;
-    return 0;
-  };
-  showData(Ai.sort(sort));
+const displaySortedData = data => {
+    const Ai = data;
+    sort = (a, b) => {
+        const dateA = new Date(a.published_in);
+        const dateB = new Date(b.published_in);
+        if (dateA > dateB) return 1;
+        else if (dateA < dateB) return -1;
+        return 0;
+    };
+    showData(Ai.sort(sort));
 }
 
-{/* <div class="bg-danger text-end position-absolute top-0 end-0 p-1 rounded">
-              ${modal.accuracy.score? modal.accuracy.score * 100 +"% accuracy": ''
-
-            }
-            </div> */}
