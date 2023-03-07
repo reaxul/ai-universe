@@ -5,10 +5,12 @@ const loadData = () => {
         .then(data => showData(data.data.tools.slice(0, 6)))
 }
 const showData = data => {
+
     const container = document.getElementById('data-container');
     container.innerHTML = ''
     document.getElementById('spinner').classList.add('d-none');
     data.forEach(card => {
+        console.log(card);
         const { image, name, features, published_in, id } = card;
         const div = document.createElement('div');
         div.classList.add('col')
@@ -20,10 +22,13 @@ const showData = data => {
                 <div class="card-body">
                 <h5>Features</h5>
                     <ol id="feature-list" class="text-nowrap">
-                        <li class="text-nowrap">${features[0]}</li>
-                        <li class="text-nowrap">${features[1]}</li>
-                        <li class=${features[2]?"" : "d-none text-nowrap"}>${features[2]}</li>
-                        <li class=${features[3]?"" : "d-none text-nowrap"}>${features[3]}</li>
+                    ${
+                        features.map(x=>{
+                            return `<li>${x}</li>`
+                        }).join('')
+                        
+                    }
+                        
                     </ol>
                     <hr>
                 <div class="d-flex justify-content-between align-items-center">
@@ -116,10 +121,12 @@ const showModalData = modal => {
                         ${
                           modal.integrations?
                           `<ul class="small-text">
-                          <li class=${modal.integrations[0]=== undefined ? "d-none" : ""}>${modal.integrations[0]}</li>
-                          <li class=${modal.integrations[1]=== undefined ? "d-none" : ""}>${modal.integrations[1]}</li>
-                          <li class=${modal.integrations[2]=== undefined ? "d-none" : ""}>${modal.integrations[2]}</li>
-                          <li class=${modal.integrations[3]=== undefined ? "d-none" : ""}>${modal.integrations[3]}</li>
+                          ${
+                            modal.integrations.map(
+                            x=>{
+                                return `<li>${x}</li>`
+                            }).join('')
+                        }
                           
                         </ul>`
                         : `<small>No data found</small>`
@@ -151,22 +158,33 @@ const showModalData = modal => {
     modalContainer.appendChild(modalData);
 }
 
-// sorting data 
+// sorting data:
 const loadSortedData = () => {
     document.getElementById('show-more').classList.add('d-none')
     fetch('https://openapi.programming-hero.com/api/ai/tools')
         .then(res => res.json())
         .then(data => displaySortedData(data.data.tools))
 }
-const displaySortedData = data => {
-    const Ai = data;
-    sort = (a, b) => {
-        const dateA = new Date(a.published_in);
-        const dateB = new Date(b.published_in);
-        if (dateA > dateB) return 1;
-        else if (dateA < dateB) return -1;
-        return 0;
-    };
-    showData(Ai.sort(sort));
+
+// method 1:
+const displaySortedData = data =>{
+data.sort((a,b)=>new Date(a.published_in)-new Date(b.published_in));
+showData(data);
 }
+
+// method 2:
+
+// const displaySortedData = data => {
+    
+    
+//     sort = (a, b) => {
+//         const dateA = new Date(a.published_in);
+//         const dateB = new Date(b.published_in);
+//         if (dateA > dateB) return 1;
+//         else if (dateA < dateB) return -1;
+//         return 0;
+//     };
+//     showData(data.sort(sort));
+// }
+
 
