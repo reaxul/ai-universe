@@ -10,7 +10,6 @@ const showData = data => {
     container.innerHTML = ''
     document.getElementById('spinner').classList.add('d-none');
     data.forEach(card => {
-        console.log(card);
         const { image, name, features, published_in, id } = card;
         const div = document.createElement('div');
         div.classList.add('col')
